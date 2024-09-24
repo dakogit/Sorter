@@ -1,0 +1,11 @@
+﻿/.vs
+/ConsoleApp/bin/Debug/net8.0
+/ConsoleApp/obj
+/Tests/IntegrationTests/bin/Debug/net8.0
+/Tests/IntegrationTests/obj
+/Tests/TestProject1/bin/Debug/net8.0
+/Tests/TestProject1/obj
+/TextGenerator/bin/Debug/net8.0
+/TextGenerator/obj
+/TextSorter/bin/Debug/net8.0
+/TextSorter/obj
