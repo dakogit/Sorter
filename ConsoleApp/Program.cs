@@ -50,21 +50,32 @@ static void AskFileSizeAndGenerateRandomFile()
     if (double.TryParse(Console.ReadLine(), out double fileSizeMB) && fileSizeMB > 0)
     {
         long fileSizeBytes = (long)(fileSizeMB * 1024 * 1024);
-        Stopwatch stopwatch = new Stopwatch();
-        Console.WriteLine($"Start generating a text file with size {fileSizeMB}Mb");
-        stopwatch.Start();
-        GeneratorService.GenerateTextFile(FileConfig.RandomFile, fileSizeBytes);
-        stopwatch.Stop();
-        Console.WriteLine($"File is generated: {Path.GetFullPath(FileConfig.RandomFile)}");
-        Console.WriteLine(stopwatch);
-        stopwatch.Restart();
+        long requiredSpaceBytes = fileSizeBytes * 2;
+
+        string filePath = Path.GetFullPath(FileConfig.RandomFile);
+        string driveName = Path.GetPathRoot(filePath);
+        DriveInfo driveInfo = new DriveInfo(driveName);
+
+        if (driveInfo.AvailableFreeSpace >= requiredSpaceBytes)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            Console.WriteLine($"Start generating a text file with size {fileSizeMB}Mb");
+            stopwatch.Start();
+            GeneratorService.GenerateTextFile(FileConfig.RandomFile, fileSizeBytes);
+            stopwatch.Stop();
+            Console.WriteLine($"File is generated: {filePath}");
+            Console.WriteLine(stopwatch);
+        }
+        else
+        {
+            Console.WriteLine("Not enough disk space. Please ensure there is at least double the file size available.");
+        }
     }
     else
     {
         Console.WriteLine("Invalid file size. Please enter a positive number.");
     }
 }
-
 static async Task InputFilePath()
 {
     Console.WriteLine("Please enter the file path:");

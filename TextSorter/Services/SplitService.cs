@@ -65,14 +65,6 @@ namespace TextSorter.Services
             }
             await File.WriteAllTextAsync(filePath, sb.ToString());
 
-            //using (var writer = new StreamWriter(filePath, false, System.Text.Encoding.UTF8, BufferSize))
-            //{
-            //    foreach (var item in list)
-            //    {
-            //        writer.WriteLine($"{item.Id}.{item.Value}");
-            //    }
-            //}
-
             lock (_chunkFiles)
             {
                 _chunkFiles.Add(filePath);
